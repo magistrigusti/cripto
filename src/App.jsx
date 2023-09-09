@@ -1,28 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
 import { getCoins } from './api/api';
 
 function App() {
-  const [balance, setBalance] = useState(5000);
+  const [balance, setBalance] = useState(50000);
   const [coins, setCoins] = useState([]);
+  const [filteredCoins, setFilteredCoins] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getCoins();
       setCoins(data.coins);
+      setFilteredCoins(data.coins);
     }
     fetchData();
   }, []);
 
-  console.log(coins);
-
   return (
     <>
       <Header />
-      <Main coins={coins} balance={balance} setBalance={setBalance} />
+      <Main balance={balance} 
+          setBalance={setBalance}
+          coins={coins}
+          setCoins={setFilteredCoins}
+          filteredCoins={filteredCoins}
+      />
     </>
-  );
+  )
 }
 
 export default App;

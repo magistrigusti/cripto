@@ -1,0 +1,17 @@
+.filter-block {
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  border-radius: 12px;
+  background-color: aliceblue;
+  padding: 10px;
+}
+
+.input {
+  border: none;
+  border-radius: 12px;
+  background-color: white;
+  padding: 10px 15px;
+}

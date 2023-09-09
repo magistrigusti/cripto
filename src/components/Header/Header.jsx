@@ -1,10 +1,11 @@
 import './Header.css';
 
+const name = 'TonDeV';
+
 const Header = () => {
-  const name = 'TonDeV';
   return (
     <div className='header'>{name}</div>
-  );
-};
+  )
+}
 
 export default Header;
