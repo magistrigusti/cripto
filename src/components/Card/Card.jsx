@@ -1,5 +1,5 @@
 import './Card.css';
-import {WithRuBalance} from '../../helpers/hoc/withRuBalance'
+import { WithRuBalance } from '../../helpers/hoc/withRuBalance'
 
 const Card = ({balance, setBalance, ruBalance}) => {
   console.log({ruBalance});
@@ -14,7 +14,7 @@ const Card = ({balance, setBalance, ruBalance}) => {
 
       <div className="card_block">
         <p>TonDeV</p>
-        <p>{balance}</p>
+        <p>{balance} $</p>
       </div>
     </div>
   )
