@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
 import './FilterBlock.css';
 
 const FilterBlock = ({coins, setCoins}) => {
   const [value, setValue] = useState('');
-
+  console.log('-render filter-')
   useEffect(() => {
-      const FilteredCoins = coins.filter(coin => {
+      const FilteredCoins = coins.filter((coin) => {
         return coin.name.toLowerCase().includes(value);
       })
       setCoins(FilteredCoins);
@@ -23,4 +23,4 @@ const FilterBlock = ({coins, setCoins}) => {
   )
 }
 
-export default FilterBlock;
+export default React.memo(FilterBlock);
