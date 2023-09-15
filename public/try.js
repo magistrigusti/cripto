@@ -28,13 +28,13 @@ export const getCoins = async () => {
 // App
 
 /* 
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
 import { getCoins } from './api/api';
 
 function App() {
-  const [balance, setBalance] = useState(5000);
+  const [balance, setBalance] = useState(4000);
   const [coins, setCoins] = useState([]);
   const [filteredCoins, setFilteredCoins] = useState([]);
 
@@ -47,21 +47,24 @@ function App() {
     fetchData();
   }, []);
 
+  const addBalance = useCallback(() => {
+    setBalance(prev => prev + 1000)
+  }, []);
+
   return (
     <>
       <Header />
       <Main balance={balance} 
-          setBalance={setBalance} 
-          coins={coins} 
-          setCoins={setFilteredCoins} 
+          setBalance={addBalance}
+          coins={coins}
+          setCoins={setFilteredCoins}
           filteredCoins={filteredCoins}
       />
     </>
   )
-
 }
 
-export default App; 
+export default App;
 */
 
 
@@ -73,24 +76,30 @@ export default App;
 // Main
 
 
-/* import styles from './Main.module.css';
+/* 
+import { useMemo } from 'react';
+import styles from './Main.module.css';
 import Card from '../../components/Card/Card';
 import CoinsList from '../../components/CoinsList/CoinsList';
 import FilterBlock from'../../components/FilterBlock/FilterBlock';
 
 const Main = ({balance, setBalance, coins, setCoins, filteredCoins}) => {
+  const filterExpensiveCoins = () => {
+    console.log('---func work');
+    return filteredCoins.filter((coin) => coin.price > 1000);
+  }
+  const expensiveCoins = useMemo(() => filterExpensiveCoins(), [filteredCoins]);
+
   return (
     <main className={styles.main}>
       <Card balance={balance} setBalance={setBalance} />
-
       <FilterBlock coins={coins} setCoins={setCoins} />
-
-      {coins.length > 0 ? <CoinsList coins={filteredCoins} /> : <div>Loading....</div>}
+      {coins.length > 0 ? <CoinsList coins={expensiveCoins} /> : <div>Loading...</div>}
     </main>
   )
 }
 
-export default Main; */
+export default Main;
 
 
 
@@ -102,25 +111,26 @@ import './Card.css';
 import { WithRuBalance } from '../../helpers/hoc/withRuBalance'
 
 const Card = ({balance, setBalance, ruBalance}) => {
-  console.log({ruBalance});
+
   return (
     <div className='card'>
       <div className='card_block'> 
         <h3>Dmitrii</h3>
         <button onMouseEnter={() => console.log('enter')}
-          onClick={() => setBalance((prev) => prev + 1000)}
+          onClick={setBalance}
         >Add Moneny</button>
       </div>
 
       <div className="card_block">
         <p>TonDeV</p>
-        <p>{balance}</p>
+        <p>{balance} $</p>
       </div>
     </div>
   )
 }
 
-export default WithRuBalance(Card); */
+export default WithRuBalance(Card);
+*/
 
 
 
@@ -165,32 +175,36 @@ export default CoinsList; */
 // FilterBlock 
 
 
-/* import { useState, useEffect } from 'react';
+/* 
+import React, { useState, useEffect, } from 'react';
 import './FilterBlock.css';
 
 const FilterBlock = ({coins, setCoins}) => {
   const [value, setValue] = useState('');
-
+  console.log('-render filter-')
   useEffect(() => {
-    const FilteredCoins = coins.filter(coin => {
-      return coin.name.toLowerCase().includes(value);
-    })
-    setCoins(FilteredCoins);
+      const FilteredCoins = coins.filter((coin) => {
+        return coin.name.toLowerCase().includes(value);
+      })
+      setCoins(FilteredCoins);
   }, [value]);
-  
+
   return (
-    <div className='filter-block'>
+    <div className='filter-Block'>
       <input onChange={(event) => setValue(event.target.value)}
-          className='input' 
-          type="text" 
-          placeholder='toncoin'
-          value={value}
+        className='input'
+        type='text'
+        placeholder='toncoin'
+        value={value}
       />
     </div>
   )
 }
 
-export default FilterBlock;  */
+export default React.memo(FilterBlock);
+*/
+
+
 
 // Header 
 

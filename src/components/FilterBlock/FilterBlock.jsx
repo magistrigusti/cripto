@@ -1,14 +1,18 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './FilterBlock.css';
+import { CoinsContext } from '../../context/coinsContext';
 
-const FilterBlock = ({coins, setCoins}) => {
+const FilterBlock = ({ coins, setCoins }) => {
+  const coinsContext = useContext(CoinsContext);
+  const { filteredCoins } = coinsContext;
+
   const [value, setValue] = useState('');
-  console.log('-render filter-')
+
   useEffect(() => {
-      const FilteredCoins = coins.filter((coin) => {
-        return coin.name.toLowerCase().includes(value);
-      })
-      setCoins(FilteredCoins);
+    const filteredCoins = coins.filter((coin) => {
+      return coin.name.toLowerCase().includes(value);
+    })
+    setCoins(FilteredCoins);
   }, [value]);
 
   return (

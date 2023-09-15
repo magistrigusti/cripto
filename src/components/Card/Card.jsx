@@ -2,13 +2,13 @@ import './Card.css';
 import { WithRuBalance } from '../../helpers/hoc/withRuBalance'
 
 const Card = ({balance, setBalance, ruBalance}) => {
-  console.log({ruBalance});
+
   return (
     <div className='card'>
       <div className='card_block'> 
         <h3>Dmitrii</h3>
         <button onMouseEnter={() => console.log('enter')}
-          onClick={() => setBalance((prev) => prev + 1000)}
+          onClick={setBalance}
         >Add Moneny</button>
       </div>
 

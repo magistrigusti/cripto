@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
 import { getCoins } from './api/api';
+import { CoinsContext } from './context/coinsContext';
 
 function App() {
   const [balance, setBalance] = useState(4000);
@@ -23,13 +24,15 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Main balance={balance} 
+      <CoinsContext.Provider value={{coins, filteredCoins}}>
+        <Header />
+        <Main balance={balance}
           setBalance={addBalance}
           coins={coins}
           setCoins={setFilteredCoins}
           filteredCoins={filteredCoins}
-      />
+        />
+      </CoinsContext.Provider>
     </>
   )
 }
