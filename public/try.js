@@ -25,6 +25,7 @@ export const getCoins = async () => {
 
 
 
+
 // App
 
 /* 
@@ -32,6 +33,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
 import { getCoins } from './api/api';
+import { CoinsContext } from './context/coinsContext';
 
 function App() {
   const [balance, setBalance] = useState(4000);
@@ -53,13 +55,15 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Main balance={balance} 
+      <CoinsContext.Provider value={{coins, filteredCoins}}>
+        <Header />
+        <Main balance={balance}
           setBalance={addBalance}
           coins={coins}
           setCoins={setFilteredCoins}
           filteredCoins={filteredCoins}
-      />
+        />
+      </CoinsContext.Provider>
     </>
   )
 }
@@ -77,29 +81,25 @@ export default App;
 
 
 /* 
-import { useMemo } from 'react';
 import styles from './Main.module.css';
 import Card from '../../components/Card/Card';
 import CoinsList from '../../components/CoinsList/CoinsList';
 import FilterBlock from'../../components/FilterBlock/FilterBlock';
 
-const Main = ({balance, setBalance, coins, setCoins, filteredCoins}) => {
-  const filterExpensiveCoins = () => {
-    console.log('---func work');
-    return filteredCoins.filter((coin) => coin.price > 1000);
-  }
-  const expensiveCoins = useMemo(() => filterExpensiveCoins(), [filteredCoins]);
+const Main = ({balance, setBalance, coins, setCoins }) => {
+
 
   return (
     <main className={styles.main}>
       <Card balance={balance} setBalance={setBalance} />
-      <FilterBlock coins={coins} setCoins={setCoins} />
-      {coins.length > 0 ? <CoinsList coins={expensiveCoins} /> : <div>Loading...</div>}
+      <FilterBlock setCoins={setCoins} />
+      {coins.length > 0 ? <CoinsList /> : <div>Loading...</div>}
     </main>
   )
 }
 
 export default Main;
+*/
 
 
 
@@ -136,19 +136,28 @@ export default WithRuBalance(Card);
 
 // CoinsList
 
-/* import './CoinsList.css';
+/* 
+import { useContext } from 'react';
+import './CoinsList.css';
+import { CoinsContext } from '../../context/coinsContext';
 
-const CoinsList = ({coins}) => {
+const CoinsList = () => {
+  const coinsContext = useContext(CoinsContext);
+  const { filteredCoins } = coinsContext; 
+
   return (
     <div className='coins-list'>
-      {coins.map(coin => {
+      {filteredCoins.map(coin => {
         return (
           <li className='coin-item' key={coin.uuid}>
             <div className='coin-item_info'>
-              <img className='coin-item_logo' src={coin.iconUrl} alt={coin.name} />
-
+              <img className='coin-item_logo' 
+                src={coin.iconUrl}
+                alt={coin.name}
+              />
+              
               <p style={{color: coin.color}}>
-                {coin.name}/USD
+                {coin.name}
               </p>
             </div>
 
@@ -168,26 +177,25 @@ const CoinsList = ({coins}) => {
   )
 }
 
-export default CoinsList; */
+export default CoinsList;
+*/
+
 
 
 
 // FilterBlock 
 
-
 /* 
-import React, { useState, useEffect, } from 'react';
+import React, { useContext } from 'react';
 import './FilterBlock.css';
+import { CoinsContext } from '../../context/coinsContext';
+import { useFilterCoins } from '../../helpers/hooks/useFilterCoins';
 
-const FilterBlock = ({coins, setCoins}) => {
-  const [value, setValue] = useState('');
-  console.log('-render filter-')
-  useEffect(() => {
-      const FilteredCoins = coins.filter((coin) => {
-        return coin.name.toLowerCase().includes(value);
-      })
-      setCoins(FilteredCoins);
-  }, [value]);
+const FilterBlock = ({ setCoins }) => {
+  const coinsContext = useContext(CoinsContext);
+  const { coins } = coinsContext;
+
+  const { value, setValue} = useFilterCoins(setCoins, coins);
 
   return (
     <div className='filter-Block'>
@@ -203,6 +211,25 @@ const FilterBlock = ({coins, setCoins}) => {
 
 export default React.memo(FilterBlock);
 */
+
+
+
+// useFilterCoins 
+
+/* import { useState, useEffect } from 'react';
+
+export const useFilterCoins = (setCoins, coins) => {
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    const filteredCoins = coins.filter((coin) => {
+      return coin.name.toLowerCase().includes(value);
+    })
+    setCoins(filteredCoins);
+  }, [value]);
+
+  return {value, setValue};
+} */
 
 
 

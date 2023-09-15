@@ -5,10 +5,10 @@ import { getCoins } from './api/api';
 import { CoinsContext } from './context/coinsContext';
 
 function App() {
-  const [balance, setBalance] = useState(4000);
+  const [balance, setBalance] = useState(5000);
   const [coins, setCoins] = useState([]);
   const [filteredCoins, setFilteredCoins] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const data = await getCoins();
@@ -24,13 +24,13 @@ function App() {
 
   return (
     <>
-      <CoinsContext.Provider value={{coins, filteredCoins}}>
+      <CoinsContext.Provider value={{coins, filteredCoins}} >
         <Header />
         <Main balance={balance}
-          setBalance={addBalance}
-          coins={coins}
-          setCoins={setFilteredCoins}
-          filteredCoins={filteredCoins}
+            setBalance={addBalance}
+            coins={coins}
+            setCoins={setFilteredCoins}
+            filteredCoins={filteredCoins}
         />
       </CoinsContext.Provider>
     </>
