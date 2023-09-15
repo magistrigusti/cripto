@@ -10,7 +10,7 @@ const FilterBlock = ({ setCoins }) => {
   const { value, setValue} = useFilterCoins(setCoins, coins);
 
   return (
-    <div className='filter-Block'>
+    <div className='filter-block'>
       <input onChange={(event) => setValue(event.target.value)}
         className='input'
         type='text'

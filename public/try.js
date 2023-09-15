@@ -29,6 +29,7 @@ export const getCoins = async () => {
 // App
 
 /* 
+
 import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
@@ -36,10 +37,10 @@ import { getCoins } from './api/api';
 import { CoinsContext } from './context/coinsContext';
 
 function App() {
-  const [balance, setBalance] = useState(4000);
+  const [balance, setBalance] = useState(5000);
   const [coins, setCoins] = useState([]);
   const [filteredCoins, setFilteredCoins] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const data = await getCoins();
@@ -55,13 +56,13 @@ function App() {
 
   return (
     <>
-      <CoinsContext.Provider value={{coins, filteredCoins}}>
+      <CoinsContext.Provider value={{coins, filteredCoins}} >
         <Header />
         <Main balance={balance}
-          setBalance={addBalance}
-          coins={coins}
-          setCoins={setFilteredCoins}
-          filteredCoins={filteredCoins}
+            setBalance={addBalance}
+            coins={coins}
+            setCoins={setFilteredCoins}
+            filteredCoins={filteredCoins}
         />
       </CoinsContext.Provider>
     </>
@@ -69,6 +70,7 @@ function App() {
 }
 
 export default App;
+
 */
 
 
@@ -81,6 +83,7 @@ export default App;
 
 
 /* 
+
 import styles from './Main.module.css';
 import Card from '../../components/Card/Card';
 import CoinsList from '../../components/CoinsList/CoinsList';
@@ -99,6 +102,7 @@ const Main = ({balance, setBalance, coins, setCoins }) => {
 }
 
 export default Main;
+
 */
 
 
@@ -137,6 +141,7 @@ export default WithRuBalance(Card);
 // CoinsList
 
 /* 
+
 import { useContext } from 'react';
 import './CoinsList.css';
 import { CoinsContext } from '../../context/coinsContext';
@@ -178,6 +183,7 @@ const CoinsList = () => {
 }
 
 export default CoinsList;
+
 */
 
 
@@ -198,7 +204,7 @@ const FilterBlock = ({ setCoins }) => {
   const { value, setValue} = useFilterCoins(setCoins, coins);
 
   return (
-    <div className='filter-Block'>
+    <div className='filter-block'>
       <input onChange={(event) => setValue(event.target.value)}
         className='input'
         type='text'
@@ -216,7 +222,8 @@ export default React.memo(FilterBlock);
 
 // useFilterCoins 
 
-/* import { useState, useEffect } from 'react';
+/* 
+import { useState, useEffect } from 'react';
 
 export const useFilterCoins = (setCoins, coins) => {
   const [value, setValue] = useState('');
@@ -229,7 +236,8 @@ export const useFilterCoins = (setCoins, coins) => {
   }, [value]);
 
   return {value, setValue};
-} */
+}
+*/
 
 
 
